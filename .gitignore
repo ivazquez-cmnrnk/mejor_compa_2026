@@ -1,0 +1,11 @@
+.env
+*.csv
+
+server/data/db.json
+
+node_modules/
+server/node_modules/
+client/node_modules/
+
+client/dist/
+client/.vite/
