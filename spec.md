@@ -4,11 +4,11 @@ Crear una aplicación web con React para votar al mejor compañero por categorí
 
 ## Requisitos
 
-1. Guardar la información en la siguiente hoja de cálculo (idFile): 1OHVfy57ezPMOLKuVcOE1UeaI6U4TyJ-shX7LOKcl0EA
+1. Guardar la información en un archivo JSON local (`server/data/db.json`)
 2. Crear login de usuarios para validar que usuario ya votó. 
     - Primero debes loguear la aplicación con la API de Sievert con `login` para obtener el token. 
     -  Después debes exigir al usuario que se loguee con `get_access` para poder realizar la votación por medio de un formulario de Login.
-    - Debes validar en la hoja "Votantes" en la columna "idFlxCore03" que el usuario no haya votado y mostrar el formulario de votación. De lo contririo debes mostrarle un cartel que diga "YA VOTASTE".
+    - Debes validar en `db.json` en la lista `votantes` que el usuario no haya votado (buscando por `idFlxCore03`). De lo contrario debes mostrarle un cartel que diga "YA VOTASTE".
 3. Crear formulario de votación:
     - Agrega una fila por cada una de estas categorías:
         - "El más Argel" 
@@ -39,8 +39,8 @@ Crear una aplicación web con React para votar al mejor compañero por categorí
         - “EL/la más gritón”
         - "El más borrachin"
     - Por cada categoría debe permitirse seleccionar un personal de una lista a obtener del endpoint `sys_admi_01`. Debe mostrarse el nombre completo y la foto del personal en el combo. Debe validarse que se seleccione un personal por categoría. No debe quedar vacío.
-    - Al enviar el formulario debe agregarse una fila en la hoja de "Votantes" con el idFlxCore03 y el flxCore03Nombre del usuario que votó.
-    - Para registrar los votos por categoría debe ir a la hoja de "Votos", por cada categoría debe buscar su fila en la columna A y registrar en la primer celda disponible a la derecha de esa fila el nombre del personal votado.  
+    - Al enviar el formulario debe agregarse un registro en `db.json` en la lista `votantes` con el `idFlxCore03` y el `flxCore03Nombre` del usuario que votó.
+    - Para registrar los votos por categoría debe agregarse en `db.json` en el objeto `votos`, usando el nombre de la categoría como clave y agregando el nombre del personal votado a su array.  
 
 ### Endpoints
 

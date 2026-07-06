@@ -2,8 +2,18 @@ const fs = require('fs');
 const path = require('path');
 
 const DB_PATH = path.join(__dirname, '..', 'data', 'db.json');
+const DEFAULT_DB = { votantes: [], votos: {}, candidatos: [] };
+
+function ensureDbExists() {
+  if (!fs.existsSync(DB_PATH)) {
+    const dir = path.dirname(DB_PATH);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(DB_PATH, JSON.stringify(DEFAULT_DB, null, 2), 'utf-8');
+  }
+}
 
 function read() {
+  ensureDbExists();
   const raw = fs.readFileSync(DB_PATH, 'utf-8');
   return JSON.parse(raw);
 }
