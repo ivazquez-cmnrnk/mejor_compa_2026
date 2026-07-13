@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const sievert = require('../services/sievert');
-const db = require('../services/db');
+const db = require('../services/supabase');
 
 const router = Router();
 
@@ -19,7 +19,7 @@ router.post('/login', async (req, res) => {
     }
 
     const user = data.user;
-    const voted = db.userHasVoted(String(user.idFlxCore03));
+    const voted = await db.userHasVoted(String(user.idFlxCore03));
 
     res.json({ voted, user });
   } catch (err) {

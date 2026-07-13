@@ -1,17 +1,17 @@
 const { Router } = require('express');
 const sievert = require('../services/sievert');
-const db = require('../services/db');
+const db = require('../services/supabase');
 
 const router = Router();
 
 router.get('/candidates', async (req, res) => {
   try {
     const candidatos = await sievert.getCandidatos();
-    db.setCandidatosCache(candidatos);
+    await db.setCandidatosCache(candidatos);
     res.json(candidatos);
   } catch (err) {
     console.error('Error obteniendo candidatos:', err.message);
-    const cached = db.getCandidatosCache();
+    const cached = await db.getCandidatosCache();
     if (cached && cached.length > 0) {
       return res.json(cached);
     }

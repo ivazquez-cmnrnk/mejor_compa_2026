@@ -49,7 +49,14 @@ async function getCandidatos() {
       'X-Authorization-token': token
     }
   });
-  return res.data.data;
+
+  const { resultid, data } = res.data;
+
+  const idsCandidatosExcluidos = ["149", "155", "4", "10", "152", "126", "143", "75"];
+  //para filtrar manualmente candidatos que no queremos que aparezcan en la lista de candidatos
+  const filteredData = data.filter(personal => !idsCandidatosExcluidos.includes(personal["id_sysadmi01"]));
+
+  return filteredData
 }
 
 module.exports = { loginSystem, getValidToken, getUserAccess, getCandidatos };

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const db = require('../services/db');
+const db = require('../services/supabase');
 
 const router = Router();
 
@@ -17,18 +17,18 @@ const CATEGORIES = [
   "El más borrachin"
 ];
 
-router.post('/vote', (req, res) => {
+router.post('/vote', async (req, res) => {
   const { userId, userName, votos } = req.body;
 
   if (!userId || !userName || !votos) {
     return res.status(400).json({ error: 'Faltan datos requeridos' });
   }
 
-  if (db.userHasVoted(String(userId))) {
+  if (await db.userHasVoted(String(userId))) {
     return res.status(409).json({ error: 'YA VOTASTE' });
   }
 
-  const candidatos = db.getCandidatosCache();
+  const candidatos = await db.getCandidatosCache();
   const candidatosMap = {};
   for (const c of candidatos) {
     candidatosMap[c.id_sysadmi01] = c.nombre_completo;
@@ -53,8 +53,8 @@ router.post('/vote', (req, res) => {
     votosNombres[cat] = nombre;
   }
 
-  db.addVotante(String(userId), userName);
-  db.addVotos(votosNombres);
+  await db.addVotante(String(userId), userName);
+  await db.addVotos(votosNombres, String(userId));
 
   res.json({ success: true });
 });

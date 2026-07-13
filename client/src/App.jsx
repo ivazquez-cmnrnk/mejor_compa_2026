@@ -7,6 +7,7 @@ import VotingForm from './components/VotingForm';
 export default function App() {
   return (
     <div className="app">
+      <img className="logo" src="/logo.png" alt="Mejor Compañero 2026" />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<LoginForm />} />
