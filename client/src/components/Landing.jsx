@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import CategoryCard from './CategoryCard';
+import VoterDonut from './VoterDonut';
 
 const CATEGORIES = [
   "El más Argel", "Alma de Jubilado", "El más Fachero/a",
@@ -18,13 +19,17 @@ const CATEGORIES = [
 
 export default function Landing() {
   const [rankings, setRankings] = useState({});
+  const [voterStats, setVoterStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/rankings')
-      .then(res => res.json())
-      .then(data => {
-        setRankings(data);
+    Promise.all([
+      fetch('/api/rankings').then(r => r.json()),
+      fetch('/api/voter-stats').then(r => r.json())
+    ])
+      .then(([rankingsData, statsData]) => {
+        setRankings(rankingsData);
+        setVoterStats(statsData);
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -42,6 +47,14 @@ export default function Landing() {
           🗳️ Votar
         </Link>
       </div>
+
+      {voterStats && (
+        <VoterDonut
+          porcentaje={voterStats.porcentaje}
+          votaron={voterStats.votaron}
+          total={voterStats.total}
+        />
+      )}
 
       {loading ? (
         <div className="loading">Cargando rankings...</div>

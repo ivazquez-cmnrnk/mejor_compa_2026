@@ -555,3 +555,39 @@ body {
   padding: 60px;
   color: var(--color-text-muted);
 }
+
+/* Voter Donut */
+.voter-donut {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto 32px;
+  width: fit-content;
+}
+
+.voter-donut-svg {
+  width: 140px;
+  height: 150px;
+}
+
+.voter-donut-arc {
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+.voter-donut-pct {
+  font-size: 1.6rem;
+  font-weight: 800;
+  fill: var(--color-text);
+}
+
+.voter-donut-label {
+  font-size: 0.65rem;
+  fill: var(--color-text-muted);
+}
+
+.voter-donut-count {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+  text-align: center;
+}

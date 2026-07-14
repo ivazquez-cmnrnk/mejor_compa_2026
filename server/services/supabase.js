@@ -63,7 +63,15 @@ async function getRankings() {
   return rankings;
 }
 
+async function getVoterStats(total) {
+  const { rows } = await pool.query('SELECT COUNT(*)::int as votaron FROM votantes');
+  const votaron = parseInt(rows[0].votaron, 10);
+  const porcentaje = total > 0 ? Math.round((votaron / total) * 100) : 0;
+  return { total, votaron, porcentaje };
+}
+
 module.exports = {
   userHasVoted, addVotante, addVotos,
-  getCandidatosCache, setCandidatosCache, getRankings
+  getCandidatosCache, setCandidatosCache, getRankings,
+  getVoterStats
 };
