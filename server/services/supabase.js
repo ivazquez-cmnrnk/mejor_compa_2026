@@ -56,9 +56,7 @@ async function getRankings() {
   const rankings = {};
   for (const row of rows) {
     if (!rankings[row.categoria]) rankings[row.categoria] = [];
-    if (rankings[row.categoria].length < 3) {
-      rankings[row.categoria].push({ nombre: row.nombre_votado, votos: row.votos });
-    }
+    rankings[row.categoria].push({ nombre: row.nombre_votado, votos: row.votos });
   }
   return rankings;
 }
